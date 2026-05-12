@@ -39,7 +39,7 @@
 #include <linux/sys_info.h>
 #include <trace/events/error_report.h>
 #include <asm/sections.h>
-
+#include <linux/bad_apple.h>
 #define PANIC_TIMER_STEP 100
 #define PANIC_BLINK_SPD 18
 
@@ -604,6 +604,8 @@ void vpanic(const char *fmt, va_list args)
 	 * Explicitly flush the kernel log buffer one last time.
 	 */
 	console_flush_on_panic(CONSOLE_FLUSH_PENDING);
+	/* Play Bad Apple ASCII animation before system halts */
+	play_bad_apple_on_panic();
 	nbcon_atomic_flush_unsafe();
 
 	local_irq_enable();
